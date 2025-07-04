@@ -3,6 +3,7 @@ import 'package:strong_logic/screens/multi_image.dart';
 import 'package:strong_logic/screens/multi_selection.dart';
 import 'package:strong_logic/screens/single_selection.dart';
 import 'package:strong_logic/screens/toggle.dart';
+import 'package:strong_logic/screens/upload_image.dart';
 
 class Root extends StatefulWidget {
   const Root({super.key});
@@ -18,6 +19,7 @@ class _RootState extends State<Root> {
     SingleSelection(),
     MultiImage(),
     MultiSelection(),
+    UploadImage(),
   ];
   int pageIndex = 0;
   @override
