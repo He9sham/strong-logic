@@ -12,7 +12,7 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   XFile? selectedImage;
-
+  /// upload image 
   Future<void> uploadImage() async {
     final pickedImage = await ImagePicker().pickImage(
       source: ImageSource.gallery,
