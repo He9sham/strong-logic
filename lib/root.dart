@@ -3,6 +3,7 @@ import 'package:strong_logic/screens/multi_image.dart';
 import 'package:strong_logic/screens/multi_selection.dart';
 import 'package:strong_logic/screens/single_selection.dart';
 import 'package:strong_logic/screens/toggle.dart';
+import 'package:strong_logic/screens/upload_file.dart';
 import 'package:strong_logic/screens/upload_image.dart';
 import 'package:strong_logic/screens/upload_multi_images.dart';
 import 'package:strong_logic/screens/upload_video.dart';
@@ -24,11 +25,13 @@ class _RootState extends State<Root> {
     UploadImage(),
     UploadMultiImages(),
     UploadVideo(),
+    UploadFile(),
   ];
   int pageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withValues(alpha: 0.7),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -39,7 +42,6 @@ class _RootState extends State<Root> {
         },
         children: screens,
       ),
-
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
         child: Row(
