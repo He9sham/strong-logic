@@ -17,12 +17,14 @@ class _UploadVideoState extends State<UploadVideo> {
 
   /// upload video
   Future<void> uploadVideo() async {
-    final pickedVideo = await ImagePicker().pickVideo(
+    final XFile? pickedVideo = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
     );
 
     if (pickedVideo != null) {
       controller = VideoPlayerController.file(File(pickedVideo.path));
+
+      await controller!.initialize();
     }
 
     setState(() {
@@ -68,10 +70,7 @@ class _UploadVideoState extends State<UploadVideo> {
               child: controller != null && controller!.value.isInitialized
                   ? ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(12),
-                      child: AspectRatio(
-                        aspectRatio: controller!.value.aspectRatio,
-                        child: VideoPlayer(controller!),
-                      ),
+                      child: VideoPlayer(controller!),
                     )
                   : null,
             ),
