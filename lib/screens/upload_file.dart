@@ -50,7 +50,7 @@ class _UploadFileState extends State<UploadFile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Upload file',
+                        fileName == null ? "Upload File" : "$fileName",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text('pdf , docx , doc , jpg'),
