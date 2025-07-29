@@ -94,6 +94,11 @@ class _UploadFileState extends State<UploadFile> {
                         ),
                         // delete
                         PopupMenuItem(
+                          onTap: () {
+                            setState(() {
+                              fileName = null;
+                            });
+                          },
                           child: Row(
                             children: [
                               Icon(CupertinoIcons.delete, color: Colors.red),
