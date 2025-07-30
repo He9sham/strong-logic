@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:open_file/open_file.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class UploadFile extends StatefulWidget {
   const UploadFile({super.key});
@@ -12,19 +16,33 @@ class UploadFile extends StatefulWidget {
 
 class _UploadFileState extends State<UploadFile> {
   String? fileName;
+  String? filepath;
   // upload file function
   Future<void> uploadFile() async {
-    final pickerFiles = await FilePicker.platform.pickFiles();
+    final pickerFiles = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'docx', 'doc', 'jpg'],
+    );
 
     if (pickerFiles != null && pickerFiles.files.single.name.isNotEmpty) {
       setState(() {
         fileName = pickerFiles.files.single.name;
+        filepath = pickerFiles.files.single.path;
       });
+    }
+  }
+
+  /// open file at my apk
+  Future<void> openFile(String? path) async {
+    if (path != null) {
+      await OpenFile.open(path);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -74,6 +92,7 @@ class _UploadFileState extends State<UploadFile> {
                         ),
                         // view
                         PopupMenuItem(
+                          onTap: () => openFile(filepath),
                           child: Row(
                             children: [
                               Icon(CupertinoIcons.eye),
@@ -84,6 +103,7 @@ class _UploadFileState extends State<UploadFile> {
                         ),
                         // change
                         PopupMenuItem(
+                          onTap: uploadFile,
                           child: Row(
                             children: [
                               Icon(CupertinoIcons.refresh),
@@ -97,6 +117,7 @@ class _UploadFileState extends State<UploadFile> {
                           onTap: () {
                             setState(() {
                               fileName = null;
+                              filepath = null;
                             });
                           },
                           child: Row(
@@ -116,6 +137,15 @@ class _UploadFileState extends State<UploadFile> {
                 ],
               ),
             ),
+
+            SizedBox(height: 50),
+            if (filepath != null && filepath!.endsWith('pdf'))
+              Container(
+                decoration: BoxDecoration(color: Colors.transparent),
+                width: width * 0.7,
+                height: height * 0.5,
+                child: SfPdfViewer.file(File(filepath!)),
+              ),
           ],
         ),
       ),
