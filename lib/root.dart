@@ -3,6 +3,7 @@ import 'package:strong_logic/screens/one/multi_image.dart';
 import 'package:strong_logic/screens/one/multi_selection.dart';
 import 'package:strong_logic/screens/one/single_selection.dart';
 import 'package:strong_logic/screens/one/toggle.dart';
+import 'package:strong_logic/screens/search&list_filtering/search_feature.dart';
 import 'package:strong_logic/screens/upload_files/upload_file.dart';
 import 'package:strong_logic/screens/upload_files/upload_image.dart';
 import 'package:strong_logic/screens/upload_files/upload_multi_images.dart';
@@ -26,6 +27,7 @@ class _RootState extends State<Root> {
     UploadMultiImages(),
     UploadVideo(),
     UploadFile(),
+    SearchFeature(),
   ];
   int pageIndex = 0;
   @override
