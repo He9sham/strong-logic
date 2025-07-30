@@ -103,7 +103,7 @@ class _UploadFileState extends State<UploadFile> {
                         ),
                         // change
                         PopupMenuItem(
-                          onTap: uploadFile,
+                          onTap: filepath == null ? null : uploadFile,
                           child: Row(
                             children: [
                               Icon(CupertinoIcons.refresh),
