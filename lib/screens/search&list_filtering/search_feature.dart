@@ -9,6 +9,7 @@ class SearchFeature extends StatefulWidget {
 }
 
 class _SearchFeatureState extends State<SearchFeature> {
+  final TextEditingController searchController = TextEditingController();
   List<Map> products = [
     {
       "image":
@@ -41,6 +42,25 @@ class _SearchFeatureState extends State<SearchFeature> {
       "price": 150,
     },
   ];
+  List<Map> filteredProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts = products;
+  }
+
+  /// search filter function to filter the products
+  void searchFilter(String keyword) {
+    setState(() {
+      filteredProducts = products.where((product) {
+        final title = product['title'].toString().toLowerCase();
+        final input = keyword.toLowerCase();
+        return title.contains(input);
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,10 +75,24 @@ class _SearchFeatureState extends State<SearchFeature> {
             SizedBox(
               height: 45,
               child: TextField(
+                controller: searchController,
+                onChanged: searchFilter,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                   prefixIcon: Icon(CupertinoIcons.search),
-                  suffixIcon: Icon(CupertinoIcons.xmark),
+                  suffixIcon:
+                      searchController.text.isNotEmpty &&
+                          searchController.text != ' '
+                      ? GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              searchController.clear();
+                              searchFilter('');
+                            });
+                          },
+                          child: Icon(CupertinoIcons.xmark),
+                        )
+                      : SizedBox.shrink(),
                   contentPadding: EdgeInsets.symmetric(horizontal: 12),
                   hintText: 'Search',
                   helperStyle: TextStyle(color: Colors.black),
@@ -75,9 +109,103 @@ class _SearchFeatureState extends State<SearchFeature> {
 
             SizedBox(height: 50),
 
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchFilter('Men');
+                    });
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Men',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchFilter('Women');
+                    });
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Women',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchFilter('Nike');
+                    });
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Nike',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchFilter('watch');
+                    });
+                  },
+                  child: Container(
+                    width: 70,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Watch',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 15),
+
             Column(
-              children: List.generate(5, (index) {
-                final product = products[index];
+              children: List.generate(filteredProducts.length, (index) {
+                final product = filteredProducts[index];
                 return ListTile(
                   contentPadding: EdgeInsets.symmetric(vertical: 10),
                   leading: ClipRRect(
