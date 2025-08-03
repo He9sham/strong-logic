@@ -61,180 +61,258 @@ class _SearchFeatureState extends State<SearchFeature> {
     });
   }
 
+  /// filter by price
+  void filterByPrice() {
+    setState(() {
+      filteredProducts = List.from(products);
+
+      filteredProducts.sort((a, b) => b['price'].compareTo(a['price']));
+    });
+  }
+
+  /// filter by alpha
+  void filterByAlpha() {
+    setState(() {
+      filteredProducts = List<Map>.from(products);
+
+      filteredProducts.sort((a, b) => b['title'].compareTo(a['title']));
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.pink.shade900,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.pink.shade900,
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            SizedBox(height: 120),
-            // Text field for search
-            SizedBox(
-              height: 45,
-              child: TextField(
-                controller: searchController,
-                onChanged: searchFilter,
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                  prefixIcon: Icon(CupertinoIcons.search),
-                  suffixIcon:
-                      searchController.text.isNotEmpty &&
-                          searchController.text != ' '
-                      ? GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              searchController.clear();
-                              searchFilter('');
-                            });
-                          },
-                          child: Icon(CupertinoIcons.xmark),
-                        )
-                      : SizedBox.shrink(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                  hintText: 'Search',
-                  helperStyle: TextStyle(color: Colors.black),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              SizedBox(height: 120),
+              // Text field for search
+              SizedBox(
+                height: 45,
+                child: TextField(
+                  controller: searchController,
+                  onChanged: searchFilter,
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(CupertinoIcons.search),
+                    suffixIcon:
+                        searchController.text.isNotEmpty &&
+                            searchController.text != ' '
+                        ? GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                searchController.clear();
+                                searchFilter('');
+                              });
+                            },
+                            child: Icon(CupertinoIcons.xmark),
+                          )
+                        : SizedBox.shrink(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                    hintText: 'Search',
+                    helperStyle: TextStyle(color: Colors.black),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+
+                    focusedBorder: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.grey.shade300,
                   ),
-
-                  focusedBorder: OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.grey.shade300,
                 ),
               ),
-            ),
 
-            SizedBox(height: 50),
-
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      searchFilter('Men');
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Men',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+              SizedBox(height: 50),
+              // category filter
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        searchFilter('Men');
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey.shade300,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Men',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      searchFilter('Women');
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Women',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        searchFilter('Women');
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey.shade300,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Women',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      searchFilter('Nike');
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Nike',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        searchFilter('Nike');
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey.shade300,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Nike',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      searchFilter('watch');
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Watch',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        searchFilter('');
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey.shade300,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'All',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              SizedBox(height: 15),
+              // sort filter
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: filterByPrice,
+                    icon: Icon(Icons.sort, color: Colors.white),
+                  ),
+                  Text('Sort by price', style: TextStyle(color: Colors.white)),
+                  SizedBox(width: 10),
+                  IconButton(
+                    onPressed: filterByAlpha,
+                    icon: Icon(Icons.list_sharp, color: Colors.white),
+                  ),
+                  Text('A - Z', style: TextStyle(color: Colors.white)),
 
-            SizedBox(height: 15),
+                  Spacer(),
 
-            Column(
-              children: List.generate(filteredProducts.length, (index) {
-                final product = filteredProducts[index];
-                return ListTile(
-                  contentPadding: EdgeInsets.symmetric(vertical: 10),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(8),
-                    child: Image.network(
-                      product['image'],
-                      fit: BoxFit.cover,
-                      height: 80,
-                      width: 80,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        filteredProducts = List<Map>.from(products);
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+
+                      child: Row(
+                        children: [
+                          Icon(Icons.clear, color: Colors.white, size: 15),
+
+                          SizedBox(width: 5),
+                          Text(
+                            'Clear Filter',
+                            style: TextStyle(color: Colors.white, fontSize: 10),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  title: Text(
-                    product['title'],
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                ],
+              ),
+              SizedBox(height: 15),
+
+              Column(
+                children: List.generate(filteredProducts.length, (index) {
+                  final product = filteredProducts[index];
+                  return ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(8),
+                      child: Image.network(
+                        product['image'],
+                        fit: BoxFit.cover,
+                        height: 80,
+                        width: 80,
+                      ),
                     ),
-                  ),
-                  trailing: Text(
-                    '${product['price']}\$',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    title: Text(
+                      product['title'],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                );
-              }),
-            ),
-          ],
+                    trailing: Text(
+                      '${product['price']}\$',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );
