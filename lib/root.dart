@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:strong_logic/screens/form_validation/form_validation.dart';
 import 'package:strong_logic/screens/one/multi_image.dart';
 import 'package:strong_logic/screens/one/multi_selection.dart';
 import 'package:strong_logic/screens/one/single_selection.dart';
@@ -28,6 +29,7 @@ class _RootState extends State<Root> {
     UploadVideo(),
     UploadFile(),
     SearchFeature(),
+    FormValidation(),
   ];
   int pageIndex = 0;
   @override
