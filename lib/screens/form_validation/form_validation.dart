@@ -12,6 +12,24 @@ class _FormValidationState extends State<FormValidation> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   String request = '';
+  void update() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    email.addListener(update);
+    password.addListener(update);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,6 +42,7 @@ class _FormValidationState extends State<FormValidation> {
           child: Form(
             key: formkey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 150),
                 // from email
@@ -66,9 +85,13 @@ class _FormValidationState extends State<FormValidation> {
                 SizedBox(height: 15),
                 // from password
                 TextFormField(
+                  maxLength: 9,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Fill the password';
+                    }
+                    if (value.length < 9) {
+                      return 'Password Must be 9 numbers';
                     }
                     return null;
                   },
@@ -114,7 +137,9 @@ class _FormValidationState extends State<FormValidation> {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: email.text == '' && password.text == ''
+                          ? Colors.grey
+                          : Colors.blue,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
@@ -126,10 +151,21 @@ class _FormValidationState extends State<FormValidation> {
                   ),
                 ),
 
-                SizedBox(height: 15),
+                SizedBox(height: 150),
 
                 Text(
                   'Request : $request',
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 15),
+
+                Text(
+                  'Email : ${email.text.replaceAll(' ', '')}',
+                  style: TextStyle(color: Colors.white),
+                ),
+
+                Text(
+                  'Password : ${password.text}',
                   style: TextStyle(color: Colors.white),
                 ),
               ],
