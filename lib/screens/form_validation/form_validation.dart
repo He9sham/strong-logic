@@ -32,9 +32,10 @@ class _FormValidationState extends State<FormValidation> {
                     if (value == null || value.isEmpty) {
                       return 'Fill the email';
                     }
-                    if (!value!.endsWith('@gmail.com')) {
+                    if (!value.endsWith('@gmail.com')) {
                       return 'write Email in right format';
                     }
+                    return null;
                   },
                   controller: email,
                   cursorColor: Colors.white,
@@ -47,6 +48,10 @@ class _FormValidationState extends State<FormValidation> {
                     prefixIcon: Icon(
                       Icons.email_outlined,
                       color: Colors.grey.shade500,
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade700),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey.shade700),
@@ -65,6 +70,7 @@ class _FormValidationState extends State<FormValidation> {
                     if (value == null || value.isEmpty) {
                       return 'Fill the password';
                     }
+                    return null;
                   },
                   controller: password,
                   cursorColor: Colors.white,
@@ -77,6 +83,10 @@ class _FormValidationState extends State<FormValidation> {
                       color: Colors.grey.shade500,
                     ),
                     suffixIcon: Icon(Icons.remove_red_eye),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey.shade700),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey.shade700),
                       borderRadius: BorderRadius.circular(10),
