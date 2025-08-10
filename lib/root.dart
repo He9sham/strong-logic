@@ -4,6 +4,7 @@ import 'package:strong_logic/screens/one/multi_image.dart';
 import 'package:strong_logic/screens/one/multi_selection.dart';
 import 'package:strong_logic/screens/one/single_selection.dart';
 import 'package:strong_logic/screens/one/toggle.dart';
+import 'package:strong_logic/screens/pagination&infintie_scroll/pagination.dart';
 import 'package:strong_logic/screens/search&list_filtering/search_feature.dart';
 import 'package:strong_logic/screens/upload_files/upload_file.dart';
 import 'package:strong_logic/screens/upload_files/upload_image.dart';
@@ -30,6 +31,7 @@ class _RootState extends State<Root> {
     UploadFile(),
     SearchFeature(),
     FormValidation(),
+    Pagination(),
   ];
   int pageIndex = 0;
   @override
